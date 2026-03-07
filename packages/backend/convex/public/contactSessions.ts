@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "../_generated/server";
 
-const SESSION_DURATION_MS = 8000;
+const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
 
 export const createContactSession = mutation({
   args: {
