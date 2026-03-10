@@ -8,6 +8,7 @@ import { contactSessionIdAtomFamily, conversationIdAtom, errorMessageAtom, organ
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { useState } from "react";
+import { WidgetFooter } from "../components/widget-footer";
 
 export const WidgetSelectionScreen = () => {
   const setScreen = useSetAtom(screenAtom);
@@ -28,12 +29,12 @@ export const WidgetSelectionScreen = () => {
       setErrorMessage("Missing Organization ID");
       return;
     }
-    
+
     if (!contactSessionId) {
       setScreen("auth");
       return;
     }
-    
+
     setIsPending(true);
     try {
       const conversationId = await createConversation({
@@ -76,6 +77,7 @@ export const WidgetSelectionScreen = () => {
           <ChevronRightIcon />
         </Button>
       </div>
+      <WidgetFooter />
     </>
   );
 };
