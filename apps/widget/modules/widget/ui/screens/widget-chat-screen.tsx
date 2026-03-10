@@ -28,6 +28,9 @@ import { ArrowLeftIcon, MenuIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { contactSessionIdAtomFamily, conversationIdAtom, organizationIdAtom, screenAtom } from "../../atoms/widget-atoms";
+import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll'
+import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
+import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -68,6 +71,13 @@ export const WidgetChatScreen = () => {
       : "skip",
     { initialNumItems: 10 },
   );
+
+  const { canLoadMore, handleLoadMore, isExhausted, isLoadingFirstPage, isLoadingMore, topElementRef } = useInfiniteScroll({
+    status: messages.status,
+    loadSize: 10,
+    loadMore: messages.loadMore,
+
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -113,6 +123,12 @@ export const WidgetChatScreen = () => {
       </WidgetHeader>
       <AIConversation>
         <AIConversationContent>
+          <InfiniteScrollTrigger
+            canLoadMore={canLoadMore}
+            isLoadingMore={isLoadingMore}
+            onLoadMore={handleLoadMore}
+            ref={topElementRef}
+          />
           {toUIMessages(messages.results ?? [])?.map((message) => {
             return (
               <AIMessage
@@ -122,7 +138,14 @@ export const WidgetChatScreen = () => {
                 <AIMessageContent>
                   <AIResponse>{message.text}</AIResponse>
                 </AIMessageContent>
-                {/* TODO: Add Avatar component */}
+
+                <DicebearAvatar
+                  imageUrl={message.role === "assistant" ? "/logo.svg" : undefined}
+                  seed="assistant"
+                  size={32}
+                  badgeImageUrl={message.role === "user" ? "/logo.svg" : undefined}
+                />
+
               </AIMessage>
             )
           })}
