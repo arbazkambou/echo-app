@@ -1,15 +1,17 @@
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
+import { useAtomValue } from "jotai";
 import { HomeIcon, InboxIcon } from "lucide-react"
+import { screenAtom } from "../../atoms/widget-atoms";
 
 export const WidgetFooter = () => {
-  const screen = "selection";
+  const screen = useAtomValue(screenAtom)
 
   return (
     <footer className="flex items-center justify-between border-t bg-background">
       <Button
         className="h-14 flex-1 rounded-none"
-        onClick={() => {}}
+        onClick={() => { }}
         size="icon"
         variant="ghost"
       >
@@ -19,7 +21,7 @@ export const WidgetFooter = () => {
       </Button>
       <Button
         className="h-14 flex-1 rounded-none"
-        onClick={() => {}}
+        onClick={() => { }}
         size="icon"
         variant="ghost"
       >

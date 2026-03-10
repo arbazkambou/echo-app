@@ -19,3 +19,4 @@ export const contactSessionIdAtomFamily = atomFamily(
 export const organizationIdAtom = atom<string | null>(null);
 export const errorMessageAtom = atom<string | null>("error");
 export const loadingMessageAtom = atom<string | null>("loading");
+export const conversationIdAtom = atom<Id<"conversations"> | null>(null);
