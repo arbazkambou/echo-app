@@ -17,6 +17,8 @@ import type * as public_organizations from "../public/organizations.js";
 import type * as system_agents_supportAgent from "../system/agents/supportAgent.js";
 import type * as system_contactSessions from "../system/contactSessions.js";
 import type * as system_conversations from "../system/conversations.js";
+import type * as system_tools_escalateConversation from "../system/tools/escalateConversation.js";
+import type * as system_tools_resolveConversation from "../system/tools/resolveConversation.js";
 import type * as users from "../users.js";
 
 import type {
@@ -35,6 +37,8 @@ declare const fullApi: ApiFromModules<{
   "system/agents/supportAgent": typeof system_agents_supportAgent;
   "system/contactSessions": typeof system_contactSessions;
   "system/conversations": typeof system_conversations;
+  "system/tools/escalateConversation": typeof system_tools_escalateConversation;
+  "system/tools/resolveConversation": typeof system_tools_resolveConversation;
   users: typeof users;
 }>;
 
