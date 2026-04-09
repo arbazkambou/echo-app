@@ -129,26 +129,32 @@ export const WidgetChatScreen = () => {
             onLoadMore={handleLoadMore}
             ref={topElementRef}
           />
-          {toUIMessages(messages.results ?? [])?.map((message) => {
-            return (
-              <AIMessage
-                from={message.role === "user" ? "user" : "assistant"}
-                key={message.id}
-              >
-                <AIMessageContent>
-                  <AIResponse>{message.text}</AIResponse>
-                </AIMessageContent>
-
-                <DicebearAvatar
-                  imageUrl={message.role === "assistant" ? "/logo.svg" : undefined}
-                  seed="assistant"
-                  size={32}
-                  badgeImageUrl={message.role === "user" ? "/logo.svg" : undefined}
-                />
-
-              </AIMessage>
+          {toUIMessages(messages.results ?? [])
+            ?.filter(
+              (message) =>
+                (message.role === "user" || message.role === "assistant") &&
+                !!message.text
             )
-          })}
+            .map((message) => {
+              return (
+                <AIMessage
+                  from={message.role === "user" ? "user" : "assistant"}
+                  key={message.id}
+                >
+                  <AIMessageContent>
+                    <AIResponse>{message.text}</AIResponse>
+                  </AIMessageContent>
+
+                  <DicebearAvatar
+                    imageUrl={message.role === "assistant" ? "/logo.svg" : undefined}
+                    seed="assistant"
+                    size={32}
+                    badgeImageUrl={message.role === "user" ? "/logo.svg" : undefined}
+                  />
+
+                </AIMessage>
+              );
+            })}
         </AIConversationContent>
       </AIConversation>
       {/* TODO: Add suggestions */}
