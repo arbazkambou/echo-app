@@ -21,6 +21,11 @@ import type * as public_contactSessions from "../public/contactSessions.js";
 import type * as public_conversations from "../public/conversations.js";
 import type * as public_messages from "../public/messages.js";
 import type * as public_organizations from "../public/organizations.js";
+<<<<<<< Updated upstream
+=======
+import type * as public_secrets from "../public/secrets.js";
+import type * as public_widgetSettings from "../public/widgetSettings.js";
+>>>>>>> Stashed changes
 import type * as system_agents_supportAgent from "../system/agents/supportAgent.js";
 import type * as system_constants from "../system/constants.js";
 import type * as system_contactSessions from "../system/contactSessions.js";
@@ -53,6 +58,11 @@ declare const fullApi: ApiFromModules<{
   "public/conversations": typeof public_conversations;
   "public/messages": typeof public_messages;
   "public/organizations": typeof public_organizations;
+<<<<<<< Updated upstream
+=======
+  "public/secrets": typeof public_secrets;
+  "public/widgetSettings": typeof public_widgetSettings;
+>>>>>>> Stashed changes
   "system/agents/supportAgent": typeof system_agents_supportAgent;
   "system/constants": typeof system_constants;
   "system/contactSessions": typeof system_contactSessions;

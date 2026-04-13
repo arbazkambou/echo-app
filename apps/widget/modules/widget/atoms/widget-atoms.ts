@@ -20,3 +20,11 @@ export const organizationIdAtom = atom<string | null>(null);
 export const errorMessageAtom = atom<string | null>("error");
 export const loadingMessageAtom = atom<string | null>("loading");
 export const conversationIdAtom = atom<Id<"conversations"> | null>(null);
+<<<<<<< Updated upstream
+=======
+export const widgetSettingsAtom = atom<Doc<"widgetSettings"> | null>(null);
+export const vapiSecretsAtom = atom<{
+  publicApiKey: string;
+} | null>(null);
+export const hasVapiSecretsAtom = atom((get) => get(vapiSecretsAtom) !== null);
+>>>>>>> Stashed changes
