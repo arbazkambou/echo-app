@@ -6,15 +6,25 @@ import {
 import { ConversationsPanel } from "../components/conversations-panel";
 
 export const ConversationsLayout = ({
-  children
-}: { children: React.ReactNode; }) => {
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
-    <ResizablePanelGroup className="h-full flex-1 w-full" orientation="horizontal">
-      <ResizablePanel defaultSize={"30%"} maxSize={"30%"} minSize={"20%"}>
+    <ResizablePanelGroup
+      className="flex h-full w-full flex-1 min-w-0"
+      orientation="horizontal"
+    >
+      <ResizablePanel
+        className="min-w-0"
+        defaultSize={"30%"}
+        maxSize={"30%"}
+        minSize={"20%"}
+      >
         <ConversationsPanel />
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel className="h-full" defaultSize={"70%"}>
+      <ResizablePanel className="h-full min-w-0" defaultSize={"50%"}>
         {children}
       </ResizablePanel>
     </ResizablePanelGroup>
