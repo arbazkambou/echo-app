@@ -1,5 +1,5 @@
-import { ArrowLeftIcon, MicIcon, MicOffIcon } from "lucide-react";
-import { Button } from "@workspace/ui/components/button";
+import { useVapi } from "@/modules/widget/hooks/use-vapi";
+import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
 import {
   AIConversation,
   AIConversationContent,
@@ -9,11 +9,11 @@ import {
   AIMessage,
   AIMessageContent,
 } from "@workspace/ui/components/ai/message";
-import { useVapi } from "@/modules/widget/hooks/use-vapi";
-import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
-import { useSetAtom } from "jotai";
-import { screenAtom } from "../../atoms/widget-atoms";
+import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import { useSetAtom } from "jotai";
+import { ArrowLeftIcon, MicIcon, MicOffIcon } from "lucide-react";
+import { screenAtom } from "../../atoms/widget-atoms";
 
 export const WidgetVoiceScreen = () => {
   const setScreen = useSetAtom(screenAtom);
@@ -41,7 +41,7 @@ export const WidgetVoiceScreen = () => {
         </div>
       </WidgetHeader>
       {transcript.length > 0 ? (
-        <AIConversation className="h-full flex-1">
+        <AIConversation className="h-full">
           <AIConversationContent>
             {transcript.map((message, index) => (
               <AIMessage
@@ -66,10 +66,12 @@ export const WidgetVoiceScreen = () => {
         <div className="flex flex-col items-center gap-y-4">
           {isConnected && (
             <div className="flex items-center gap-x-2">
-              <div className={cn(
-                "size-4 rounded-full",
-                isSpeaking ? "animate-pulse bg-red-500" : "bg-green-500"
-              )} />
+              <div
+                className={cn(
+                  "size-4 rounded-full",
+                  isSpeaking ? "animate-pulse bg-red-500" : "bg-green-500",
+                )}
+              />
               <span className="text-muted-foreground text-sm">
                 {isSpeaking ? "Assistant Speaking..." : "Listening..."}
               </span>
@@ -101,5 +103,5 @@ export const WidgetVoiceScreen = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
