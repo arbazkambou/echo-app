@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as http from "../http.js";
 import type * as lib_extractTextContent from "../lib/extractTextContent.js";
 import type * as lib_secrets from "../lib/secrets.js";
 import type * as private_contactSessions from "../private/contactSessions.js";
@@ -31,6 +32,7 @@ import type * as system_conversations from "../system/conversations.js";
 import type * as system_plugins from "../system/plugins.js";
 import type * as system_rag from "../system/rag.js";
 import type * as system_secrets from "../system/secrets.js";
+import type * as system_subscriptions from "../system/subscriptions.js";
 import type * as system_tools_escalateConversation from "../system/tools/escalateConversation.js";
 import type * as system_tools_resolveConversation from "../system/tools/resolveConversation.js";
 import type * as system_tools_search from "../system/tools/search.js";
@@ -43,6 +45,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  http: typeof http;
   "lib/extractTextContent": typeof lib_extractTextContent;
   "lib/secrets": typeof lib_secrets;
   "private/contactSessions": typeof private_contactSessions;
@@ -66,6 +69,7 @@ declare const fullApi: ApiFromModules<{
   "system/plugins": typeof system_plugins;
   "system/rag": typeof system_rag;
   "system/secrets": typeof system_secrets;
+  "system/subscriptions": typeof system_subscriptions;
   "system/tools/escalateConversation": typeof system_tools_escalateConversation;
   "system/tools/resolveConversation": typeof system_tools_resolveConversation;
   "system/tools/search": typeof system_tools_search;
