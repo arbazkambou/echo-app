@@ -1,9 +1,9 @@
-import { ConvexError, v } from "convex/values";
 import { mutation, query } from "../_generated/server";
-import { supportAgent } from "../system/agents/supportAgent";
+import { components, internal } from "../_generated/api";
+import { ConvexError, v } from "convex/values";
 import { MessageDoc, saveMessage } from "@convex-dev/agent";
-import { components } from "../_generated/api";
 import { paginationOptsValidator } from "convex/server";
+import { supportAgent } from "../system/agents/supportAgent";
 
 export const getMany = query({
   args: {
@@ -61,18 +61,19 @@ export const getMany = query({
 
 export const getOne = query({
   args: {
-    contactSessionId: v.id("contactSessions"),
     conversationId: v.id("conversations"),
+    contactSessionId: v.id("contactSessions"),
   },
   handler: async (ctx, args) => {
     const session = await ctx.db.get(args.contactSessionId);
 
-    if (!session) {
+    if (!session || session.expiresAt < Date.now()) {
       throw new ConvexError({
         code: "UNAUTHORIZED",
-        message: "Invalid Session",
+        message: "Invalid session",
       });
     }
+
     const conversation = await ctx.db.get(args.conversationId);
 
     if (!conversation) {
@@ -85,9 +86,10 @@ export const getOne = query({
     if (conversation.contactSessionId !== session._id) {
       throw new ConvexError({
         code: "UNAUTHORIZED",
-        message: "Incorrect Session",
+        message: "Incorrect session",
       });
     }
+
     return {
       _id: conversation._id,
       status: conversation.status,
@@ -110,6 +112,11 @@ export const create = mutation({
         message: "Invalid session",
       });
     }
+
+    // This refreshes the user's session if they are within the threshold
+    await ctx.runMutation(internal.system.contactSessions.refresh, {
+      contactSessionId: args.contactSessionId,
+    });
 
     const widgetSettings = await ctx.db
       .query("widgetSettings")

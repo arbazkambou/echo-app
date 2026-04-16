@@ -35,6 +35,7 @@ import { ConversationStatusButton } from "../components/conversation-status-butt
 import { useState } from "react";
 import { cn } from "@workspace/ui/lib/utils";
 import { Skeleton } from "@workspace/ui/components/skeleton";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -43,7 +44,7 @@ const formSchema = z.object({
 export const ConversationIdView = ({
   conversationId,
 }: {
-  conversationId: Id<"conversations">,
+  conversationId: Id<"conversations">;
 }) => {
   const conversation = useQuery(api.private.conversations.getOne, {
     conversationId,
@@ -52,19 +53,15 @@ export const ConversationIdView = ({
   const messages = useThreadMessages(
     api.private.messages.getMany,
     conversation?.threadId ? { threadId: conversation.threadId } : "skip",
-    { initialNumItems: 10, }
+    { initialNumItems: 10 },
   );
 
-  const {
-    topElementRef,
-    handleLoadMore,
-    canLoadMore,
-    isLoadingMore,
-  } = useInfiniteScroll({
-    status: messages.status,
-    loadMore: messages.loadMore,
-    loadSize: 10,
-  });
+  const { topElementRef, handleLoadMore, canLoadMore, isLoadingMore } =
+    useInfiniteScroll({
+      status: messages.status,
+      loadMore: messages.loadMore,
+      loadSize: 10,
+    });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -84,11 +81,12 @@ export const ConversationIdView = ({
 
       form.setValue("message", response);
     } catch (error) {
+      toast.error("Something went wrong");
       console.error(error);
     } finally {
       setIsEnhancing(false);
     }
-  }
+  };
 
   const createMessage = useMutation(api.private.messages.create);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -105,7 +103,9 @@ export const ConversationIdView = ({
   };
 
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
-  const updateConversationStatus = useMutation(api.private.conversations.updateStatus);
+  const updateConversationStatus = useMutation(
+    api.private.conversations.updateStatus,
+  );
   const handleToggleStatus = async () => {
     if (!conversation) {
       return;
@@ -119,9 +119,9 @@ export const ConversationIdView = ({
     if (conversation.status === "unresolved") {
       newStatus = "escalated";
     } else if (conversation.status === "escalated") {
-      newStatus = "resolved"
+      newStatus = "resolved";
     } else {
-      newStatus = "unresolved"
+      newStatus = "unresolved";
     }
 
     try {
@@ -137,16 +137,13 @@ export const ConversationIdView = ({
   };
 
   if (conversation === undefined || messages.status === "LoadingFirstPage") {
-    return <ConversationIdViewLoading />
+    return <ConversationIdViewLoading />;
   }
 
   return (
     <div className="flex h-full flex-col bg-muted">
       <header className="flex items-center justify-between border-b bg-background p-2.5">
-        <Button
-          size="sm"
-          variant="ghost"
-        >
+        <Button size="sm" variant="ghost">
           <MoreHorizontalIcon />
         </Button>
         {!!conversation && (
@@ -172,9 +169,7 @@ export const ConversationIdView = ({
               key={message.id}
             >
               <AIMessageContent>
-                <AIResponse>
-                  {message.text}
-                </AIResponse>
+                <AIResponse>{message.text}</AIResponse>
               </AIMessageContent>
               {message.role === "user" && (
                 <DicebearAvatar
@@ -269,11 +264,13 @@ export const ConversationIdViewLoading = () => {
               <div
                 className={cn(
                   "group flex w-full items-end justify-end gap-2 py-2 [&>div]:max-w-[80%]",
-                  isUser ? "is-user" : "is-assistant flex-row-reverse"
+                  isUser ? "is-user" : "is-assistant flex-row-reverse",
                 )}
                 key={index}
               >
-                <Skeleton className={`h-9 ${width} rounded-lg bg-neutral-200`} />
+                <Skeleton
+                  className={`h-9 ${width} rounded-lg bg-neutral-200`}
+                />
                 <Skeleton className="size-8 rounded-full bg-neutral-200" />
               </div>
             );

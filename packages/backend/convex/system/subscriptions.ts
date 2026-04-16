@@ -9,7 +9,7 @@ export const upsert = internalMutation({
   handler: async (ctx, args) => {
     const existingSubscription = await ctx.db
       .query("subscriptions")
-      .withIndex("by_organization_id", (q) => 
+      .withIndex("by_organization_id", (q) =>
         q.eq("organizationId", args.organizationId),
       )
       .unique();
@@ -34,7 +34,7 @@ export const getByOrganizationId = internalQuery({
   handler: async (ctx, args) => {
     return await ctx.db
       .query("subscriptions")
-      .withIndex("by_organization_id", (q) => 
+      .withIndex("by_organization_id", (q) =>
         q.eq("organizationId", args.organizationId),
       )
       .unique();
