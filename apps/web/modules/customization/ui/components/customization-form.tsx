@@ -184,7 +184,7 @@ export const CustomizationForm = ({
           </CardContent>
         </Card>
 
-        {hasVapiPlugin && (
+        {/* hasVapiPlugin && (
           <Card>
             <CardHeader>
               <CardTitle>Voice Assistant Settings</CardTitle>
@@ -196,7 +196,7 @@ export const CustomizationForm = ({
               <VapiFormFields form={form} />
             </CardContent>
           </Card>
-        )}
+        ) */}
 
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">

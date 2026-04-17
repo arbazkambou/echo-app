@@ -50,11 +50,13 @@ const configurationItems = [
     url: "/integrations",
     icon: LayoutDashboardIcon,
   },
+  /*
   {
     title: "Voice Assistant",
     url: "/plugins/vapi",
     icon: Mic,
   },
+  */
 ];
 
 const accountItems = [
