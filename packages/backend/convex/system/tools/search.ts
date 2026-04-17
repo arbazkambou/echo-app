@@ -41,28 +41,6 @@ export const search = createTool({
       .filter((t) => t !== null)
       .join(", ")}. Here is the context:\n\n${searchResult.text}`;
 
-    const response = await generateText({
-      messages: [
-        {
-          role: "system",
-          content: SEARCH_INTERPRETER_PROMPT,
-        },
-        {
-          role: "user",
-          content: `User asked: "${args.query}"\n\nSearch results: ${contextText}`,
-        },
-      ],
-      model: groq("llama-3.3-70b-versatile"),
-    });
-
-    await supportAgent.saveMessage(ctx, {
-      threadId: ctx.threadId,
-      message: {
-        role: "assistant",
-        content: response.text,
-      },
-    });
-
-    return response.text;
+    return contextText;
   },
 });

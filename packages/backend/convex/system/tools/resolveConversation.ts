@@ -15,14 +15,6 @@ export const resolveConversation = createTool({
       threadId: ctx.threadId,
     });
 
-    await saveMessage(ctx, components.agent, {
-      threadId: ctx.threadId,
-      message: {
-        role: "assistant",
-        content: "Conversation resolved.",
-      },
-    });
-
     return "Conversation resolved";
   },
 });
